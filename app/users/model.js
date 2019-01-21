@@ -2,12 +2,14 @@
 
 import db from '../../db'
 import Model from '../model';
+import { promises } from 'fs';
 
 const Users = {
     // ... อะไรก็ตามที่ประกาศภายใต้ model ให้บรรจุใน user ด้วย
     ...Model,
     //ให้รู้ว่าจะค้นอะไร
-    key: 'users'
+    key: 'users',
+    permittedAttrs: ['email']
 
     // ใช้ findAll ใน Model แทน
     // findAll(){
