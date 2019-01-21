@@ -1,6 +1,6 @@
 //จำลอง database
 export default {
-    "articles": [
+    articles: [
       {
         id: 1,
         title: "Introduction to JavaScript",
@@ -26,7 +26,7 @@ export default {
         authorId: 2
       },
     ],
-    user: [
+    users: [
       {
         id: 1,
         email : 'babelcoder@gmail.com',
