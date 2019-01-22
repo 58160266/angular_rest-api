@@ -1,15 +1,30 @@
 //ควบคุมตัวที่จะ response ออกมา
 
-const UserSerializer = {
+import Serializer from '../serializer'
 
-    for(method,resource){
-                    //method ชื่อ get ก็จะไป function get
-        return this[method](resource)
-    },
+const UserSerializer = {
+    ...Serializer,
+
         //user
-    get(resource){
-        const {id,email,isAdmin} = resource
-        return {id ,email,isAdmin}
+    get(user){
+        // const {id,email,isAdmin} = resource
+        // return {id ,email,isAdmin}
+
+        return this.seralize(user)
+    },
+
+    getAll(users){
+        return users.map(user => this.seralize(user))
+    },
+
+    create(user){
+        return this.seralize(user)
+    },
+
+    seralize(user){
+        const {id,email,isAdmin} = user
+
+        return {id , email, isAdmin}
     }
 
 }

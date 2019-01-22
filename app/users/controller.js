@@ -4,7 +4,7 @@ import UserSerializer from './serializer'
 const UsersController = {
     getAll(req,res){
         res.json({
-            users:Users.findAll()
+            users:UserSerializer.for('getAll',Users.findAll())
         })
     },
 
@@ -18,7 +18,7 @@ const UsersController = {
     create(req,res){
         //don't forget content-Type appication-json when POST
                                 //ดึงจาก post request เข้ามา
-        const user = Users.create({email : req.body.email})
+        const user = UserSerializer.for('create',Users.create({email : req.body.email}) )
         res.json({
             user
         })
