@@ -7,5 +7,5 @@ export function setup(router){
                             // เรียนค่าต่างๆผ่าน method
         .get('/:id',controller.get)
         .get('/',controller.getAll)
-        .post('/users',controller.create)
+        .post('/',controller.create)
 }

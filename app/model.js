@@ -27,11 +27,30 @@ const Model = {
     },
 
     update(id,attrs){
-
+        const collection = this.collection();
+        const index = this.findIndex(id)
+            //ให้ update เฉพาะค่าที่กำหนด
+        const updatedRecord = 
+            this.withPermitedAttrs(attr, collection[index])
+        
+            //เปลี่ยนค่าให้เป็นปัจจุบัน
+        this.setCollection([
+            ...collection.slice(0,index),
+            updatedRecord,
+            ...collection.slice(index +1 )
+        ])
+        return updatedRecord
     },
 
     destroy(id){
+        const collection = this.collection()
+        const index = this.findIndex(id)
 
+        //เอาออกไป
+        this.setCollection([
+            ...collection.slice(0,index),
+            ...collection.slice(index +1 )
+        ])
     },
 
     //ช่วยเรื่องการซ้ำซ้อน
@@ -42,6 +61,10 @@ const Model = {
     findRecord(id){
                                                             // + แปลงค่าให้ตรง
         return this.collection().find(record => record.id === +id)
+    },
+
+    findIndex(id){
+        return this.collection.findIndex(record => record.id === +id)
     },
                             //ค่าเริ่มต้น ไม่ส่งมาค่าก็ว่าง
     withPermitedAttrs(attrs,init = {} ){
