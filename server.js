@@ -1,6 +1,7 @@
 import express from 'express'
 import fs from 'fs' // เข้าถึง dir ต่างๆ
 import bodyParser from 'body-parser'
+import config from './config';
 
 
 //เอาไว่ใช้  route.js ที่เราประกาศขึ้นมา
@@ -31,7 +32,8 @@ function setupRouter(app){
 export function setup(){
 
     const app = express()
-    const PORT = 3000 //port เอาไว้ฟัง
+    const PORT = config.port
+    //const PORT = 3000 //port เอาไว้ฟัง
 
     // bodyParser แปลงข้อมูลต่างๆจาก การ moniter : post put patch ... เป็น json
     app.use(bodyParser.urlencoded({ extended: true}))

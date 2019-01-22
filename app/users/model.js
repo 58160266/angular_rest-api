@@ -3,9 +3,11 @@
 // import db from '../../db'
 // import { promises } from 'fs';
 
-import Model from '../model';
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import Model from '../model';
+import config from '../../config';
+
 
 const Users = {
     // ... อะไรก็ตามที่ประกาศภายใต้ model ให้บรรจุใน user ด้วย
@@ -23,27 +25,31 @@ const Users = {
     create (email , password){
                 // การทำงานเป็นแบบ asyn เลยใช้ promise ให้รู้ว่าทำงานเสร็จ แล้ว controller ถึงจะ response
         return new Promise((resolve,reject)=>{
-                                        //ทำงาน 2^12
-                                    //callback
-        bcrypt.hash(password , 12 , (err,hash)=>{
-            //กรณี error
-            if(err) return reject(err)
+                                            //ทำงาน 2^12
+                                        //callback
+            bcrypt.hash(password , 12 , (err,hash)=>{
+                //กรณี error
+                if(err) return reject(err)
 
-            const collection = this.collection()
-            const user = {
-                id:collection.length+1,
-                email,
-                password: hash,
-                isAdmin:false
-            }
+                const collection = this.collection()
+                const user = {
+                    id:collection.length+1,
+                    email,
+                    password: hash,
+                    isAdmin:false
+                }
 
-            this.setCollection([
-                ...collection,user
-            ])
-            return resolve(user)
+                this.setCollection([
+                    ...collection,user
+                ])
+                return resolve(user)
+            })
         })
-        })
 
+    },
+    genToken(user){
+                                                    //อายุ
+        return jwt.sign({sub:user.id} , config.secretKey ,{expiresIn:'1h'})
     }
 }
 
